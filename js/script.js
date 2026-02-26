@@ -152,17 +152,17 @@ tabs.rejected.addEventListener("click", function () {
 });
 
 // step.7
-// delegation 
-jobSection.container.addEventListener("click", function (e) {
+//event delegation 
+jobSection.container.addEventListener("click", function (event) {
 
-  const card = e.target.closest(".job-card");
+  const card = event.target.closest(".job-card");
   if (!card) return;
 
   const id = parseInt(card.id.replace("card-", ""));
   const job = jobs.find(j => j.id === id);
 
   // Interview button
-  if (e.target.classList.contains("interview-btn")) {
+  if (event.target.classList.contains("interview-btn")) {
 
     job.status = job.status === "interview" ? "all" : "interview";
 
@@ -174,7 +174,7 @@ jobSection.container.addEventListener("click", function (e) {
   }
 
   // Rejected button
-  else if (e.target.classList.contains("rejected-btn")) {
+  else if (event.target.classList.contains("rejected-btn")) {
 
     job.status = job.status === "rejected" ? "all" : "rejected";
 
@@ -186,7 +186,7 @@ jobSection.container.addEventListener("click", function (e) {
   }
 
   // Delete button
-  else if (e.target.closest(".delete-btn")) {
+  else if (event.target.closest(".delete-btn")) {
 
     const index = jobs.findIndex(j => j.id === id);
     if (index !== -1) {
