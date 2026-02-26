@@ -33,7 +33,6 @@ const jobs = [
   { id: 8, status: "all" }
 ];
 
-// Store current active tab
 let currentTab = "all";
 
 // step.3 update dashboard counting
@@ -60,8 +59,86 @@ function updateDashboard() {
 }
 
 // step.4
+// add tab style when active
+function setActiveTab(activeTab) {
+
+  const allTabs = [tabs.all, tabs.interview, tabs.rejected];
+
+  // Remove active style from all tabs
+  for (let i = 0; i < allTabs.length; i++) {
+    allTabs[i].classList.remove("bg-primary", "text-white");
+    allTabs[i].classList.add("bg-white", "text-gray-500");
+  }
+
+  // Add active style to clicked tab
+  activeTab.classList.remove("bg-white", "text-gray-500");
+  activeTab.classList.add("bg-primary", "text-white");
+}
 // step.5
+// filtering cards 
+function filterCards(type) {
+
+  const cards = document.querySelectorAll(".job-card");
+
+  let selectedCount = 0;
+
+  // Count selected jobs (interview and rejected)
+  for (let i = 0; i < jobs.length; i++) {
+    if (jobs[i].status === "interview" || jobs[i].status === "rejected") {
+      selectedCount++;
+    }
+  }
+
+  // Show or Hide cards
+  for (let i = 0; i < cards.length; i++) {
+
+    const card = cards[i];
+    const id = parseInt(card.id.replace("card-", ""));
+    const job = jobs.find(j => j.id === id);
+
+    if (type === "all") {
+      card.style.display = "block";
+    }
+    else if (job && job.status === type) {
+      card.style.display = "block";
+    }
+    else {
+      card.style.display = "none";
+    }
+  }
+
+  // Section count logic
+  if (selectedCount === 0) {
+    jobSection.sectionCount.innerText = jobs.length + " Jobs";
+  } else {
+    jobSection.sectionCount.innerText =
+      selectedCount + " of " + jobs.length + " Jobs";
+  }
+
+  // Show empty state if no visible cards
+  let visibleCards = 0;
+
+  for (let i = 0; i < cards.length; i++) {
+    if (cards[i].style.display !== "none") {
+      visibleCards++;
+    }
+  }
+
+  if (visibleCards === 0) {
+    jobSection.emptyState.classList.remove("hidden");
+  } else {
+    jobSection.emptyState.classList.add("hidden");
+  }
+}
 // step.6
+// section count
+
 // step.7
+// click events
+
 // step.8
+// delegation 
+
+// final step
+
 
